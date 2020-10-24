@@ -1,36 +1,33 @@
-import { IMessage } from "websocket";
+import { Middleware, MsgRef, Res } from "../interface/interface";
 import { send_str } from "../utils/sendMessage"
+import WebSocketWarpper from "./WebSocketWarpper";
 export class MassageHandler {
-    private chain: Array<any>;
+    private chain: Array<Middleware>;
     private index: number;
     final = false;
-    message: any;
-    response = {
-        report: (str: string) => {
-            send_str(str, this.message.data.group_id,this.reprot_url)
+    response: Res = {
+        report: (message: string) => {
+            send_str(message, this.msgRef.data.group_id, this.msgRef.config.httpReportUrl!)
             this.final = true;
         },
-        end:()=>{
+        end: () => {
             this.final = true;
         }
     };
-    reprot_url: string;
-    constructor(message: IMessage, reprot_url: string) {
-        const json = JSON.parse(message.utf8Data!);
-        this.reprot_url = reprot_url;
-        this.message = { raw: message, data: json };
+    msgRef: MsgRef
+    constructor(msgRef: MsgRef, chain: Array<Middleware>) {
+        this.msgRef = msgRef
         this.chain = [] // 存放中间件的数组
         this.index = 0; // 当前中间件在数组中的位置
+        this.chain = chain;
     }
-    public use(handle: any) {
-        this.chain.push(handle);
-    }
+
     public next() {
         if (this.final) return console.error("use method cannot use after reprot")
         if (this.index > this.chain.length - 1) return;
         let middleware = this.chain[this.index];
         this.index++;
-        middleware(this.message, this.response, this.next.bind(this));
+        middleware(this.msgRef, this.response, this.next.bind(this));
     }
 
 }

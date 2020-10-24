@@ -2,11 +2,18 @@
 
 import { client as WebSocketClient } from "websocket"
 import events = require('events');
+import { MsgRef, WsConfig, Middleware } from "../interface/interface";
+import { MassageHandler } from "./MassageService";
+import { throws } from "assert";
 export default class WebSocketWarpper extends events.EventEmitter {
     private client: WebSocketClient;
-    constructor(ws: string) {
+    private chain: Array<Middleware>;
+    private routedMiddwares: { [x: string]: Middleware } = {};
+    SWITCH = true;
+    constructor(ws: string, config: WsConfig) {
         super()
         this.client = new WebSocketClient();
+        this.chain = []
         this.client.connect(ws);
         this.client.on("connectFailed", (error) => {
             console.log("Connect Error: " + error.toString());
@@ -21,10 +28,25 @@ export default class WebSocketWarpper extends events.EventEmitter {
                 console.log("echo-protocol Connection Closed");
             });
             connection.on("message", message => {
-                this.emit("message", message)
+                const data = JSON.parse(message.utf8Data!);
+                const ret: MsgRef = { raw: message, wsRef: this, config: config, data: data }
+                if (data.post_type !== "message") return;
+                const temp: Array<Middleware> = [];
+                const routedChain = temp.concat(this.chain);
+                if (this.routedMiddwares[ret.data.message]) {
+                    routedChain.push(this.routedMiddwares[ret.data.message])
+                }
+                const messageHandler = new MassageHandler(ret, routedChain)
+                messageHandler.next()
             });
         });
-
-
     }
+    public all(handle: Middleware) {
+        this.chain.push(handle);
+    }
+
+    public use(url: string, handle: Middleware) {
+        this.routedMiddwares[url] = handle;
+    }
+
 }
