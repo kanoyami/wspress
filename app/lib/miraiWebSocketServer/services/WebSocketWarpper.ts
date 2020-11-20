@@ -33,8 +33,9 @@ export default class WebSocketWarpper extends events.EventEmitter {
                 if (data.post_type !== "message") return;
                 const temp: Array<Middleware> = [];
                 const routedChain = temp.concat(this.chain);
-                if (this.routedMiddwares[ret.data.message]) {
-                    routedChain.push(this.routedMiddwares[ret.data.message])
+                const url = ret.data.message.split(" ")[0]
+                if (this.routedMiddwares[url]) {
+                    routedChain.push(this.routedMiddwares[url])
                 }
                 const messageHandler = new MassageHandler(ret, routedChain)
                 messageHandler.next()
