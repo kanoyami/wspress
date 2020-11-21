@@ -1,11 +1,11 @@
 /*
  * @Date: 2020-11-21 15:55:39
  * @LastEditors: kanoyami
- * @LastEditTime: 2020-11-21 17:01:28
+ * @LastEditTime: 2020-11-21 17:12:42
  */
 import assert from 'assert'
 import { Db } from 'mongodb'
-import { AcvupGroup } from '../interface/AcvupGroup'
+import { AcvupGroup } from '../../../interface/AcvupGroup'
 import _ from 'lodash'
 /*
  * @Date: 2020-11-21 15:13:09
@@ -21,6 +21,7 @@ export function setBotStatus(status: boolean, groupQQ: string, db: Db) {
       function (err, result) {
         assert.strictEqual(err, null)
         assert.strictEqual(1, result.result.n)
+        reslove(result.result)
         console.log('Updated the botstatus')
       },
     )

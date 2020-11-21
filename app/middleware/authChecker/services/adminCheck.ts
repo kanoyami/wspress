@@ -1,11 +1,11 @@
 import assert from 'assert'
 import { Db } from 'mongodb'
-import { AcvupGroup } from '../interface/AcvupGroup'
+import { AcvupGroup } from '../../../interface/AcvupGroup'
 import _ from 'lodash'
 /*
  * @Date: 2020-11-21 15:13:09
  * @LastEditors: kanoyami
- * @LastEditTime: 2020-11-21 16:59:04
+ * @LastEditTime: 2020-11-21 19:02:28
  */
 export function adminCheck(QQ: string, groupQQ: string, db: Db) {
   const collection = db.collection('acvup-group')

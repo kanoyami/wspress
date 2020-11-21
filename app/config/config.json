@@ -4,5 +4,9 @@
    "mongodb":{
       "connect_string":"mongodb://admin:123456@192.168.1.216:27017",
       "db":"acvup-group"
+   },
+   "rabbitmq":{
+      "connect_string":"amqp://admin:admin@192.168.1.216:5672",
+      "queue":"aclive_record"
    }
 }

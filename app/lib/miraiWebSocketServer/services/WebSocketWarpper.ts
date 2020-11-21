@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-11-21 00:08:24
  * @LastEditors: kanoyami
- * @LastEditTime: 2020-11-21 16:59:58
+ * @LastEditTime: 2020-11-21 18:34:00
  */
 import { client as WebSocketClient } from 'websocket'
 import events = require('events')
@@ -51,8 +51,8 @@ export default class WebSocketWarpper extends events.EventEmitter {
     })
   }
 
-  public load(plugin: Function) {
-    plugin(this)
+  public async load(plugin: Function) {
+    await plugin(this)
   }
   public all(handle: Middleware) {
     this.chain.push(handle)

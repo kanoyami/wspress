@@ -10,6 +10,7 @@
     "docker-publish": "docker push swr.cn-south-1.myhuaweicloud.com/system-public/nnkk-bot"
   },
   "dependencies": {
+    "@types/amqplib": "^0.5.16",
     "@types/bluebird": "^3.5.29",
     "@types/body-parser": "^1.19.0",
     "@types/cheerio": "^0.22.22",
@@ -25,6 +26,7 @@
     "@types/uuid": "^7.0.0",
     "@types/validator": "^12.0.1",
     "@types/websocket": "^1.0.1",
+    "amqplib": "^0.6.0",
     "body-parser": "^1.19.0",
     "cheerio": "^1.0.0-rc.3",
     "class-validator": "^0.11.0",

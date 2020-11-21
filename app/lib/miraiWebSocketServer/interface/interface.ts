@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-11-21 00:08:24
  * @LastEditors: kanoyami
- * @LastEditTime: 2020-11-21 16:17:19
+ * @LastEditTime: 2020-11-21 17:25:13
  */
 import { IMessage } from "websocket";
 import WebSocketWarpper from "../services/WebSocketWarpper";
@@ -17,6 +17,7 @@ export interface WsConfig {
     httpReportUrl?: string,
     wsReportUrl?: string,
     dataType?: "binary" | "json" | "string"
+    rootQQ?:string
 }
 
 export interface Res {
