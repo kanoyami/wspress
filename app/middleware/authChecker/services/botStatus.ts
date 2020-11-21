@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-11-21 15:55:39
  * @LastEditors: kanoyami
- * @LastEditTime: 2020-11-21 17:12:42
+ * @LastEditTime: 2020-11-21 20:06:08
  */
 import assert from 'assert'
 import { Db } from 'mongodb'
@@ -20,9 +20,8 @@ export function setBotStatus(status: boolean, groupQQ: string, db: Db) {
       { $set: { BotStatus: status } },
       function (err, result) {
         assert.strictEqual(err, null)
-        assert.strictEqual(1, result.result.n)
+        console.log('Updated the botstatus'+result.result)
         reslove(result.result)
-        console.log('Updated the botstatus')
       },
     )
   })
@@ -32,6 +31,7 @@ export function getBotStatus(groupQQ: string, db: Db) {
   const collection = db.collection('acvup-group')
   return new Promise((reslove, reject) => {
     collection.findOne({ groupQQ: groupQQ }, function (err, doc: AcvupGroup) {
+      if (doc === null) return reslove(false)
       assert.strictEqual(err, null)
       reslove(doc.BotStatus)
     })

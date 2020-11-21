@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-11-21 14:43:23
  * @LastEditors: kanoyami
- * @LastEditTime: 2020-11-21 15:36:09
+ * @LastEditTime: 2020-11-21 19:42:03
  */
 export interface AcvupGroup {
   groupQQ: string

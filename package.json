@@ -6,8 +6,8 @@
     "dev": "ts-node-dev --respawn  ./app/app.ts",
     "prod": "rm -rf ./build && mkdir build   && tsc && cp -r ./node_modules ./build && cp -r ./app/config ./build && supervisor ./build/app.js",
     "build": "rm -rf ./build && mkdir build   && tsc && cp -r ./node_modules ./build && cp -r ./app/config ./build",
-    "docker-build": "docker build -t swr.cn-south-1.myhuaweicloud.com/system-public/nnkk-bot . ",
-    "docker-publish": "docker push swr.cn-south-1.myhuaweicloud.com/system-public/nnkk-bot"
+    "docker-build": "docker build -t swr.cn-south-1.myhuaweicloud.com/system-public/nnkk-bot:latest . ",
+    "docker-publish": "docker push swr.cn-south-1.myhuaweicloud.com/system-public/nnkk-bot:latest"
   },
   "dependencies": {
     "@types/amqplib": "^0.5.16",
