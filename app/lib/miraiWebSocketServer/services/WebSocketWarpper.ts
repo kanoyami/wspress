@@ -1,13 +1,12 @@
 /*
  * @Date: 2020-11-21 00:08:24
  * @LastEditors: kanoyami
- * @LastEditTime: 2020-11-21 15:01:17
+ * @LastEditTime: 2020-11-21 16:59:58
  */
 import { client as WebSocketClient } from 'websocket'
 import events = require('events')
 import { MsgRef, WsConfig, Middleware } from '../interface/interface'
 import { MassageHandler } from './MassageService'
-import { throws } from 'assert'
 export default class WebSocketWarpper extends events.EventEmitter {
   private client: WebSocketClient
   private chain: Array<Middleware>
@@ -31,7 +30,7 @@ export default class WebSocketWarpper extends events.EventEmitter {
       connection.on('close', () => {
         console.log('echo-protocol Connection Closed')
       })
-      connection.on('message', (message) => {
+      connection.on('message', async (message) => {
         const data = JSON.parse(message.utf8Data!)
         const ret: MsgRef = {
           raw: message,
@@ -47,7 +46,7 @@ export default class WebSocketWarpper extends events.EventEmitter {
           routedChain.push(this.routedMiddwares[url])
         }
         const messageHandler = new MassageHandler(ret, routedChain)
-        messageHandler.next()
+        await messageHandler.next()
       })
     })
   }
