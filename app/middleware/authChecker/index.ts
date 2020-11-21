@@ -1,5 +1,10 @@
+/*
+ * @Date: 2020-11-21 00:08:24
+ * @LastEditors: kanoyami
+ * @LastEditTime: 2020-11-21 15:12:17
+ */
 
-import { MsgRef, Res } from "../lib/miraiWebSocketServer/interface/interface";
+import { MsgRef, Res } from "../../lib/miraiWebSocketServer/interface/interface";
 
 export function authChecker(req: MsgRef, res: Res, next: any): void {
     if (req.data.sender.user_id.toString() === "448264919" || req.data.sender.user_id.toString() === "2973519939") {
